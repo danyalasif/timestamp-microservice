@@ -20,8 +20,11 @@ app.get("/", function (req, res) {
 
 
 // your first API endpoint... 
-app.get("/api/hello", function (req, res) {
-  res.json({greeting: 'hello API'});
+app.get("/api", function (req, res) {
+  const date = new Date();
+  const unix = date.valueOf();
+  const utc = date.toUTCString();
+  res.json({ unix, utc });
 });
 
 app.get("/api/:date", function (req, res) {
@@ -30,9 +33,13 @@ app.get("/api/:date", function (req, res) {
   if(dateParam.includes("-")) {
     date = new Date(dateParam)
   }
+
+  if (dateParam.trim().length == 0) {
+    date = new Date();
+  }
   const unix = date.valueOf();
   const utc = date.toUTCString();
-  res.json({unix, utc});
+  res.json({ unix, utc });
 
 });
 
